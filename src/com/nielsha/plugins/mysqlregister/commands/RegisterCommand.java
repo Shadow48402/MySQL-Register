@@ -12,7 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.nielsha.plugin.mysqlregister.Core;
+import com.nielsha.plugins.mysqlregister.Core;
 import com.nielsha.plugins.mysqlregister.managers.CoreManager;
 import com.nielsha.plugins.mysqlregister.managers.MessageManager;
 import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
@@ -43,14 +43,18 @@ public class RegisterCommand implements CommandExecutor {
 				return true;
 			}
 			
-			if(!RegisterCommand.validate(args[0]))
+			if(!RegisterCommand.validate(args[0])){
+				p.sendMessage(MessageManager.getMessage("INVALID_EMAIL"));
 				return true;
+			}
 
 			PreparedStatement pre = MysqlManager.getConnection().prepareStatement("INSERT INTO `users` (Username, Password, UUID, Email) VALUES (?, ?, ?, ?)");
 			pre.setString(1, p.getName());
-			pre.setString(2, CoreManager.hash(args[0], new Core().getConfig().getString("Hash")));
+			pre.setString(2, CoreManager.hash(args[0], Core.getInstance().getConfig().getString("Hash")));
 			pre.setString(3, p.getUniqueId().toString());
 			pre.setString(4, args[0]);
+			
+			p.sendMessage(MessageManager.getMessage("REGISTER_SUCCESS"));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,8 +63,7 @@ public class RegisterCommand implements CommandExecutor {
 		return false;
 	}
 
-	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
+	public static Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	public static boolean validate(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
 		return matcher.find();

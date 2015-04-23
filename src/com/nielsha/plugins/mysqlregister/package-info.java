@@ -5,4 +5,4 @@
  * @author Niels Hamelink
  *
  */
-package com.nielsha.plugin.mysqlregister;
+package com.nielsha.plugins.mysqlregister;

@@ -1,7 +1,7 @@
 name: MySQL-Register
 version: 1.3
 author: Shadow48402
-main: com.nielsha.plugin.mysqlregister.Core
+main: com.nielsha.plugins.mysqlregister.Core
 commands:
   register:
     description: Register yourself!

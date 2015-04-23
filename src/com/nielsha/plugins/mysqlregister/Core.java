@@ -1,4 +1,4 @@
-package com.nielsha.plugin.mysqlregister;
+package com.nielsha.plugins.mysqlregister;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,10 @@ import com.nielsha.plugins.mysqlregister.managers.MessageManager;
 import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class Core extends JavaPlugin {
+	static Core instance;
+	public static Core getInstance(){
+		return instance;
+	}
 
 	public void onEnable(){
 		// Register events
@@ -21,10 +25,9 @@ public class Core extends JavaPlugin {
 				new JoinEvent()
 		);
 
-
 		try {
 			// Setup MySQL
-			MysqlManager.setup();
+			MysqlManager.setup(this);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -39,15 +42,17 @@ public class Core extends JavaPlugin {
 			}
 		}
 
-		MessageManager.setup();
+		MessageManager.setup(this);
 		getCommand("register").setExecutor(new RegisterCommand());
 	}
 
 	public void onDisable(){
-		try {
-			MysqlManager.getConnection().close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if(MysqlManager.needsClose()){
+			try {
+				MysqlManager.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
