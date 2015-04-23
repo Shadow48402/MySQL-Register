@@ -1,0 +1,6 @@
+name: MySQL-Register
+version: 1.3
+main: com.nielsha.plugins.Core
+commands:
+  register:
+    description: Register yourself!
