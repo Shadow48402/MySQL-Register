@@ -1,6 +1,7 @@
 name: MySQL-Register
 version: 1.3
 author: Shadow48402
+authors: [Shadow48402, bminemachine]
 main: com.nielsha.plugins.mysqlregister.Core
 commands:
   register:

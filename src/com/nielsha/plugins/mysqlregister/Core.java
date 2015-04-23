@@ -10,7 +10,6 @@ import com.nielsha.plugins.mysqlregister.commands.RegisterCommand;
 import com.nielsha.plugins.mysqlregister.listeners.JoinEvent;
 import com.nielsha.plugins.mysqlregister.managers.CoreManager;
 import com.nielsha.plugins.mysqlregister.managers.MessageManager;
-import com.nielsha.plugins.mysqlregister.managers.MetricsManager;
 import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class Core extends JavaPlugin {
@@ -24,7 +23,7 @@ public class Core extends JavaPlugin {
 		CoreManager.registerListenenrs(
 				this,
 				new JoinEvent()
-		);
+				);
 
 		try {
 			// Setup MySQL
@@ -46,12 +45,7 @@ public class Core extends JavaPlugin {
 		MessageManager.setup(this);
 		getCommand("register").setExecutor(new RegisterCommand());
 		RegisterCommand.setConfig(getConfig());
-		
-		try {
-			MetricsManager.post();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	public void onDisable(){
