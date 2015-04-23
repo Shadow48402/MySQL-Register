@@ -9,10 +9,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.nielsha.plugin.mysqlregister.Core;
 
 public class MessageManager {
-	public File f;
-	public FileConfiguration c;
+	static File f;
+	static FileConfiguration c;
 
-	public void setup() {
+	public static void setup() {
 		f = new File(new Core().getDataFolder().getAbsolutePath(), "message.yml");
 		c = YamlConfiguration.loadConfiguration(f);
 		c.options().copyDefaults(true);
@@ -24,8 +24,8 @@ public class MessageManager {
 	}
 
 	public static String getMessage(String s){
-		if(new MessageManager().c.contains(s))
-			return new MessageManager().c.getString(s);
+		if(c.contains(s))
+			return c.getString(s);
 		else {
 			Core.console( "Can't find message '" + s + "'" );
 			return "NULL";

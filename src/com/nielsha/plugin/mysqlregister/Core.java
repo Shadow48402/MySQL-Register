@@ -17,8 +17,9 @@ public class Core extends JavaPlugin {
 	public void onEnable(){
 		// Register events
 		CoreManager.registerListenenrs(
+				this,
 				new JoinEvent()
-				);
+		);
 
 
 		try {
@@ -38,8 +39,7 @@ public class Core extends JavaPlugin {
 			}
 		}
 
-		new MessageManager().setup();
-
+		MessageManager.setup();
 		getCommand("register").setExecutor(new RegisterCommand());
 	}
 

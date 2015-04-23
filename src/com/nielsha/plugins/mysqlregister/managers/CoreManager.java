@@ -4,19 +4,13 @@ import java.security.MessageDigest;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-
-import com.nielsha.plugin.mysqlregister.Core;
+import org.bukkit.plugin.Plugin;
 
 public class CoreManager {
 
-	// Debug Test
-	public static void main(String[] args){
-		Core.console(hash("test", "MD5"));
-	}
-
-	public static void registerListenenrs(Listener... l){
+	public static void registerListenenrs(Plugin pl, Listener... l){
 		for(Listener listeners : l){
-			Bukkit.getPluginManager().registerEvents(listeners, new Core());
+			Bukkit.getPluginManager().registerEvents(listeners, pl);
 		}
 	}
 
