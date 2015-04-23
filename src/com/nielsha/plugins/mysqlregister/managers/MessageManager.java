@@ -16,19 +16,29 @@ public class MessageManager {
 
 	public static void setup(Plugin pl) {
 		f = new File(pl.getDataFolder().getAbsolutePath(), "message.yml");
-		c = YamlConfiguration.loadConfiguration(f);
-		c.options().copyDefaults(true);
-		try {
-			c.save(f);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(!f.exists()){
+			c = YamlConfiguration.loadConfiguration(f);
+			c.set("WRONG_ARGUMENTS", "&c/register [Email] [Password] [Password Confirmation]");
+			c.set("ALREADY_REGISTERED", "&cYou are already registered!");
+			c.set("PASSWORDS_NOT_EQUAL", "&cThe two passwords supplied do not match!");
+			c.set("REGISTER_NOW", "&aRegister now a account for more features!");
+			c.set("REGISTER_SUCCESS", "&aRegistration successful!");
+			c.set("INVALID_EMAIL", "&cPlease enter a valid email!");
+			
+			try {
+				c.save(f);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			c = YamlConfiguration.loadConfiguration(f);
 		}
 	}
 
 	public static String getMessage(String s){
-		if(c.contains(s))
+		if(c.getString(s) != null) {
 			return ChatColor.translateAlternateColorCodes('&', c.getString(s));
-		else {
+		} else {
 			Core.console( "Can't find message '" + s + "'" );
 			return "NULL";
 		}

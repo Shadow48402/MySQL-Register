@@ -1,5 +1,6 @@
 package com.nielsha.plugins.mysqlregister.commands;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import com.nielsha.plugins.mysqlregister.Core;
@@ -18,6 +20,12 @@ import com.nielsha.plugins.mysqlregister.managers.MessageManager;
 import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class RegisterCommand implements CommandExecutor {
+	static File f;
+	static FileConfiguration c;
+	
+	public static void setConfig(FileConfiguration config){
+		c = config;
+	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if(!(sender instanceof Player)){
@@ -48,11 +56,14 @@ public class RegisterCommand implements CommandExecutor {
 				return true;
 			}
 
+			if(c.getString("Hash") == null)
+				Core.console( "HASH NAME IS NOT FOUND" );
 			PreparedStatement pre = MysqlManager.getConnection().prepareStatement("INSERT INTO `users` (Username, Password, UUID, Email) VALUES (?, ?, ?, ?)");
 			pre.setString(1, p.getName());
-			pre.setString(2, CoreManager.hash(args[0], Core.getInstance().getConfig().getString("Hash")));
+			pre.setString(2, CoreManager.hash(args[1], c.getString("Hash")));
 			pre.setString(3, p.getUniqueId().toString());
 			pre.setString(4, args[0]);
+			pre.execute();
 			
 			p.sendMessage(MessageManager.getMessage("REGISTER_SUCCESS"));
 

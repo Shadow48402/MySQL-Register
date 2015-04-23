@@ -1,0 +1,6 @@
+WRONG_ARGUMENTS: '&c/register [Email] [Password] [Password Confirmation]'
+ALREADY_REGISTERED: '&cYou are already registered!'
+PASSWORDS_NOT_EQUAL: '&cThe two passwords supplied do not match!'
+REGISTER_NOW: '&aRegister now a account for more features!'
+REGISTER_SUCCESS: '&aRegistration successful!'
+INVALID_EMAIL: '&cPlease enter a valid email!'

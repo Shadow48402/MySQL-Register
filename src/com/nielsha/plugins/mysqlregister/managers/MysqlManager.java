@@ -16,6 +16,10 @@ import com.nielsha.plugins.mysqlregister.mysql.MySQL;
 
 public class MysqlManager {
 	static Connection c = null;
+	static boolean connected = false;
+	public static boolean isConnected(){
+		return connected;
+	}
 	static boolean close = false;
 	public static boolean needsClose(){
 		return close;
@@ -35,6 +39,7 @@ public class MysqlManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			Core.console("MySQL-Register couldn't connect with the database!");
 			Bukkit.getPluginManager().disablePlugin(pl);
 			return;
 		}
@@ -47,10 +52,11 @@ public class MysqlManager {
 				getInfo(pl, "Password"));
 		try {
 			c = mysql.openConnection();
+			connected = true;
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			connected = false;
 		}
-		if(c.isClosed()) {
+		if(!isConnected()){
 			Core.console("MySQL-Register couldn't connect with the database!");
 			Bukkit.getPluginManager().disablePlugin(pl);
 			return;
