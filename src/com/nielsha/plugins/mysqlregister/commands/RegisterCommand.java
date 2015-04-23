@@ -32,6 +32,11 @@ public class RegisterCommand implements CommandExecutor {
 			return true;
 		}
 		Player p = (Player) sender;
+		
+		if(!p.hasPermission("MysqlRegister.register")){
+			p.sendMessage(MessageManager.getMessage("NO_PERMISSION"));
+			return true;
+		}
 
 		if(args.length != 3){
 			p.sendMessage(MessageManager.getMessage("WRONG_ARGUMENTS"));
@@ -58,7 +63,16 @@ public class RegisterCommand implements CommandExecutor {
 
 			if(c.getString("Hash") == null)
 				Core.console( "HASH NAME IS NOT FOUND" );
-			PreparedStatement pre = MysqlManager.getConnection().prepareStatement("INSERT INTO `users` (Username, Password, UUID, Email) VALUES (?, ?, ?, ?)");
+			PreparedStatement pre = MysqlManager.getConnection().prepareStatement("INSERT INTO `" 
+				+ MysqlManager.getInfo(Core.getInstance(), "Options.table-name") 
+				+ "` (" + MysqlManager.getInfo(Core.getInstance(), "Options.user-column") 
+				+ ", "
+				+ MysqlManager.getInfo(Core.getInstance(), "Options.password-column") 
+				+ ", "
+				+ MysqlManager.getInfo(Core.getInstance(), "Options.uuid-column") 
+				+ ", "
+				+ MysqlManager.getInfo(Core.getInstance(), "Options.email-column") 
+				+ ") VALUES (?, ?, ?, ?)");
 			pre.setString(1, p.getName());
 			pre.setString(2, CoreManager.hash(args[1], c.getString("Hash")));
 			pre.setString(3, p.getUniqueId().toString());
@@ -75,8 +89,8 @@ public class RegisterCommand implements CommandExecutor {
 	}
 
 	public static Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-	public static boolean validate(String emailStr) {
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+	public static boolean validate(String email) {
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
 		return matcher.find();
 	}
 

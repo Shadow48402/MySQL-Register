@@ -34,6 +34,11 @@ public class MysqlManager {
 			c.set("Database", "Database");
 			c.set("Username", "User");
 			c.set("Password", "Password");
+			c.set("Options.table-name", "users");
+			c.set("Options.user-column", "Username");
+			c.set("Options.uuid-column", "UUID");
+			c.set("Options.email-column", "Email");
+			c.set("Options.password-column", "Password");
 			try {
 				c.save(f);
 			} catch (IOException e) {
@@ -62,16 +67,17 @@ public class MysqlManager {
 			return;
 		}
 		close = true;
+		Core.console("Connected with the database!");
 		Statement s = c.createStatement();
 		Core.console("Creating table 'users'");
-		s.executeUpdate("CREATE TABLE IF NOT EXISTS users ("
+		s.executeUpdate("CREATE TABLE IF NOT EXISTS " + getInfo(pl, "Options.table-name") + "("
 				+ "id INT NOT NULL AUTO_INCREMENT,"
-				+ "Username VARCHAR(200),"
-				+ "Password VARCHAR(200),"
-				+ "UUID VARCHAR(36),"
-				+ "Email VARCHAR(200),"
+				+ getInfo(pl, "Options.user-column") + " VARCHAR(200),"
+				+ getInfo(pl, "Options.password-column") + " VARCHAR(200),"
+				+ getInfo(pl, "Options.uuid-column") + " VARCHAR(36),"
+				+ getInfo(pl, "Options.email-column") + " VARCHAR(200),"
 				+ "PRIMARY KEY (id) )");
-		Core.console("Created table 'users'");
+		Core.console("Created or found the table 'users'");
 	}
 	
 	public static String getInfo(Plugin pl, String s){

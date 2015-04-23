@@ -17,13 +17,13 @@ public class Core extends JavaPlugin {
 	public static Core getInstance(){
 		return instance;
 	}
-
+	
 	public void onEnable(){
 		// Register events
 		CoreManager.registerListenenrs(
 				this,
-				new JoinEvent()
-				);
+				new JoinEvent(this)
+		);
 
 		try {
 			// Setup MySQL

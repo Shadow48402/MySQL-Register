@@ -21,9 +21,10 @@ public class MessageManager {
 			c.set("WRONG_ARGUMENTS", "&c/register [Email] [Password] [Password Confirmation]");
 			c.set("ALREADY_REGISTERED", "&cYou are already registered!");
 			c.set("PASSWORDS_NOT_EQUAL", "&cThe two passwords supplied do not match!");
-			c.set("REGISTER_NOW", "&aRegister now a account for more features!");
+			c.set("REGISTER_NOW", "&aRegister now an account for more features!");
 			c.set("REGISTER_SUCCESS", "&aRegistration successful!");
 			c.set("INVALID_EMAIL", "&cPlease enter a valid email!");
+			c.set("NO_PERMISSION", "&cYou are not allowed to do that!");
 			
 			try {
 				c.save(f);
