@@ -1,10 +1,11 @@
-package com.nielsha.plugins.managers;
+package com.nielsha.plugins.mysqlregister.managers;
 
 import java.security.MessageDigest;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
-import com.nielsha.plugins.Core;
+import com.nielsha.plugin.mysqlregister.Core;
 
 public class CoreManager {
 

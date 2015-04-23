@@ -1,4 +1,4 @@
-package com.nielsha.plugins.managers;
+package com.nielsha.plugins.mysqlregister.managers;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.nielsha.plugins.Core;
-import com.nielsha.plugins.mysql.MySQL;
+import com.nielsha.plugin.mysqlregister.Core;
+import com.nielsha.plugins.mysqlregister.mysql.MySQL;
 
 public class MysqlManager {
 	static Connection c = null;

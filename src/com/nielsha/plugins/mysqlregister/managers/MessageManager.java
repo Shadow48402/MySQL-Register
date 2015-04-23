@@ -1,4 +1,4 @@
-package com.nielsha.plugins.managers;
+package com.nielsha.plugins.mysqlregister.managers;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.nielsha.plugins.Core;
+import com.nielsha.plugin.mysqlregister.Core;
 
 public class MessageManager {
 	public File f;

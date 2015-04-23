@@ -1,4 +1,4 @@
-package com.nielsha.plugins.listeners;
+package com.nielsha.plugins.mysqlregister.listeners;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.nielsha.plugins.managers.MessageManager;
-import com.nielsha.plugins.managers.MysqlManager;
+import com.nielsha.plugins.mysqlregister.managers.MessageManager;
+import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class JoinEvent implements Listener{
 

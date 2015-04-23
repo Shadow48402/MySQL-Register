@@ -1,4 +1,4 @@
-package com.nielsha.plugins.commands;
+package com.nielsha.plugins.mysqlregister.commands;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +12,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.nielsha.plugins.Core;
-import com.nielsha.plugins.managers.CoreManager;
-import com.nielsha.plugins.managers.MessageManager;
-import com.nielsha.plugins.managers.MysqlManager;
+import com.nielsha.plugin.mysqlregister.Core;
+import com.nielsha.plugins.mysqlregister.managers.CoreManager;
+import com.nielsha.plugins.mysqlregister.managers.MessageManager;
+import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class RegisterCommand implements CommandExecutor {
 

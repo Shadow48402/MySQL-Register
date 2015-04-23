@@ -1,4 +1,4 @@
-package com.nielsha.plugins.mysql;
+package com.nielsha.plugins.mysqlregister.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
