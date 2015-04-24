@@ -43,7 +43,7 @@ public class Core extends JavaPlugin {
 		}
 
 		MessageManager.setup(this);
-		getCommand("register").setExecutor(new RegisterCommand());
+		getCommand("register").setExecutor(new RegisterCommand(this));
 		RegisterCommand.setConfig(getConfig());
 
 	}

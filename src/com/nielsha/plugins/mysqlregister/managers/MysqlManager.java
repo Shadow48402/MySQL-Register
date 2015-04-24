@@ -69,7 +69,7 @@ public class MysqlManager {
 		close = true;
 		Core.console("Connected with the database!");
 		Statement s = c.createStatement();
-		Core.console("Creating table 'users'");
+		Core.console("Creating table '" + getInfo(pl, "Options.table-name") + "'");
 		s.executeUpdate("CREATE TABLE IF NOT EXISTS " + getInfo(pl, "Options.table-name") + "("
 				+ "id INT NOT NULL AUTO_INCREMENT,"
 				+ getInfo(pl, "Options.user-column") + " VARCHAR(200),"
@@ -77,7 +77,7 @@ public class MysqlManager {
 				+ getInfo(pl, "Options.uuid-column") + " VARCHAR(36),"
 				+ getInfo(pl, "Options.email-column") + " VARCHAR(200),"
 				+ "PRIMARY KEY (id) )");
-		Core.console("Created or found the table 'users'");
+		Core.console("Created or found the table '" + getInfo(pl, "Options.table-name") + "'");
 	}
 	
 	public static String getInfo(Plugin pl, String s){

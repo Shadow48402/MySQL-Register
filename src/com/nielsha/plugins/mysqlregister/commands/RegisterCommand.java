@@ -20,6 +20,10 @@ import com.nielsha.plugins.mysqlregister.managers.MessageManager;
 import com.nielsha.plugins.mysqlregister.managers.MysqlManager;
 
 public class RegisterCommand implements CommandExecutor {
+	public Core plugin;
+	public RegisterCommand(Core plugin){
+		this.plugin = plugin;
+	}
 	static File f;
 	static FileConfiguration c;
 	
@@ -64,14 +68,14 @@ public class RegisterCommand implements CommandExecutor {
 			if(c.getString("Hash") == null)
 				Core.console( "HASH NAME IS NOT FOUND" );
 			PreparedStatement pre = MysqlManager.getConnection().prepareStatement("INSERT INTO `" 
-				+ MysqlManager.getInfo(Core.getInstance(), "Options.table-name") 
-				+ "` (" + MysqlManager.getInfo(Core.getInstance(), "Options.user-column") 
+				+ MysqlManager.getInfo(plugin, "Options.table-name") 
+				+ "` (" + MysqlManager.getInfo(plugin, "Options.user-column") 
 				+ ", "
-				+ MysqlManager.getInfo(Core.getInstance(), "Options.password-column") 
+				+ MysqlManager.getInfo(plugin, "Options.password-column") 
 				+ ", "
-				+ MysqlManager.getInfo(Core.getInstance(), "Options.uuid-column") 
+				+ MysqlManager.getInfo(plugin, "Options.uuid-column") 
 				+ ", "
-				+ MysqlManager.getInfo(Core.getInstance(), "Options.email-column") 
+				+ MysqlManager.getInfo(plugin, "Options.email-column") 
 				+ ") VALUES (?, ?, ?, ?)");
 			pre.setString(1, p.getName());
 			pre.setString(2, CoreManager.hash(args[1], c.getString("Hash")));
