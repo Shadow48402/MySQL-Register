@@ -17,6 +17,7 @@ public class Core extends JavaPlugin {
 	public static Core getInstance(){
 		return instance;
 	}
+	//public MetricsManager mm = new MetricsManager(this);
 	
 	public void onEnable(){
 		// Register events
@@ -45,7 +46,7 @@ public class Core extends JavaPlugin {
 		MessageManager.setup(this);
 		getCommand("register").setExecutor(new RegisterCommand(this));
 		RegisterCommand.setConfig(getConfig());
-
+		//mm.start();
 	}
 
 	public void onDisable(){
