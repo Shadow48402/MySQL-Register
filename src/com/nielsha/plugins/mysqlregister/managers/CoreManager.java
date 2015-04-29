@@ -13,7 +13,7 @@ public class CoreManager {
 			Bukkit.getPluginManager().registerEvents(listeners, pl);
 		}
 	}
-
+	
 	public static String hash(String password, String hashName) {
 		try {
 			MessageDigest md = MessageDigest.getInstance(hashName);

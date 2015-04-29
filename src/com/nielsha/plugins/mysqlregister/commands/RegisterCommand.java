@@ -49,7 +49,7 @@ public class RegisterCommand implements CommandExecutor {
 
 		try {
 			Statement s = MysqlManager.getConnection().createStatement();
-			ResultSet set = s.executeQuery("SELECT * FROM" + MysqlManager.getInfo(plugin, "Options.table-name") + " WHERE uuid='" + p.getUniqueId().toString() + "'");
+			ResultSet set = s.executeQuery("SELECT * FROM " + MysqlManager.getInfo(plugin, "Options.table-name") + " WHERE uuid='" + p.getUniqueId().toString() + "'");
 			if(set.first()) {
 				p.sendMessage(MessageManager.getMessage("ALREADY_REGISTERED"));
 				return true;

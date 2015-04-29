@@ -69,7 +69,7 @@ public class MysqlManager {
 		close = true;
 		Core.console("Connected with the database!");
 		Statement s = c.createStatement();
-		Core.console("Creating table '" + getInfo(pl, "Options.table-name") + "'");
+		Core.console("Creating or loading table '" + getInfo(pl, "Options.table-name") + "'");
 		s.executeUpdate("CREATE TABLE IF NOT EXISTS " + getInfo(pl, "Options.table-name") + "("
 				+ "id INT NOT NULL AUTO_INCREMENT,"
 				+ getInfo(pl, "Options.user-column") + " VARCHAR(200),"

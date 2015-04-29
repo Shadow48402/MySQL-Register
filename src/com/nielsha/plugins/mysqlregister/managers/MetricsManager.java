@@ -1,15 +1,17 @@
 package com.nielsha.plugins.mysqlregister.managers;
 
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.nielsha.plugins.mysqlregister.Protocol;
+import com.nielsha.plugins.mysqlregister.Core;
 
 public class MetricsManager {
 
@@ -47,28 +49,40 @@ public class MetricsManager {
 				@SuppressWarnings("deprecation")
 				public void run() {
 					try {
-						InetAddress address = InetAddress.getByName("data.nielsha.com");
-						Socket socket = new Socket(address, 16193);
-						ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-						Protocol protocol = new Protocol(
-								Bukkit.getIp(), 
-								Bukkit.getPort(), 
-								Bukkit.getMotd(), 
-								Bukkit.getVersion(), 
-								Bukkit.getOnlinePlayers().length, 
-								Bukkit.getMaxPlayers(), 
-								System.currentTimeMillis()
-						);
-						out.writeObject(protocol);
-						out.flush();
-						socket.close();
-					}
-					catch (Exception localException){
-						localException.printStackTrace();
+						String ip = Bukkit.getServer().getIp();
+						String port = String.valueOf(Bukkit.getServer().getPort());
+						String online = String.valueOf(Bukkit.getServer().getOnlinePlayers().length);
+						
+						Core.console("Sending HTTP POST");
+						String urlParameters  = "ip=" + ip;
+						urlParameters		  += "&port=" + port;
+						urlParameters		  += "&online=" + online;
+						byte[] postData       = urlParameters.getBytes( Charset.forName( "UTF-8" ));
+						int    postDataLength = postData.length;
+						String request        = "http://data.nielsha.com/index.php";
+						URL url;
+						url = new URL( request );
+						HttpURLConnection cox = (HttpURLConnection) url.openConnection();           
+						cox.setDoOutput( true );
+						cox.setDoInput ( true );
+						cox.setInstanceFollowRedirects( false );
+						cox.setRequestMethod( "POST" );
+						cox.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+						cox.setRequestProperty( "charset", "utf-8");
+						cox.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+						cox.setUseCaches( false );
+						try( DataOutputStream wr = new DataOutputStream( cox.getOutputStream())) {
+							wr.write( postData );
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Core.console("Sent HTTP POST");
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
 			}
-			, 1L, 12000L);
+			, 1L, 1200L);
 		}
 	}
 
