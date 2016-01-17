@@ -16,16 +16,22 @@ import com.nielsha.plugins.mysqlregister.mysql.MySQL;
 
 public class MysqlManager {
 	static Connection c = null;
+	static MySQL mysql = null;
+	
 	static boolean connected = false;
-	public static boolean isConnected(){
+	public static boolean isConnected()
+	{
 		return connected;
 	}
+	
 	static boolean close = false;
-	public static boolean needsClose(){
+	public static boolean needsClose()
+	{
 		return close;
 	}
 	
-	public static void setup(Plugin pl) throws SQLException{
+	public static void setup(Plugin pl) throws SQLException 
+	{
 		if(!new File(pl.getDataFolder().getAbsolutePath(), "database.yml").exists()){
 			File f = new File(pl.getDataFolder().getAbsolutePath(), "database.yml");
 			FileConfiguration c = YamlConfiguration.loadConfiguration(f);
@@ -48,7 +54,7 @@ public class MysqlManager {
 			Bukkit.getPluginManager().disablePlugin(pl);
 			return;
 		}
-		MySQL mysql = new MySQL(
+		mysql = new MySQL(
 				pl, 
 				getInfo(pl, "Host"), 
 				getInfo(pl, "Port"), 
@@ -80,13 +86,28 @@ public class MysqlManager {
 		Core.console("Created or found the table '" + getInfo(pl, "Options.table-name") + "'");
 	}
 	
-	public static String getInfo(Plugin pl, String s){
+	public static void CheckConnection() throws SQLException
+	{
+		if(!mysql.checkConnection())
+		{
+			try {
+				c = mysql.openConnection();
+				connected = true;
+			} catch (ClassNotFoundException | SQLException e) {
+				connected = false;
+			}	
+		}
+	}
+	
+	public static String getInfo(Plugin pl, String s)
+	{
 		File f = new File(pl.getDataFolder().getAbsolutePath(), "database.yml");
 		FileConfiguration c = YamlConfiguration.loadConfiguration(f);
 		return c.getString(s);
 	}
 	
-	public static Connection getConnection(){
+	public static Connection getConnection()
+	{
 		return c;
 	}
 

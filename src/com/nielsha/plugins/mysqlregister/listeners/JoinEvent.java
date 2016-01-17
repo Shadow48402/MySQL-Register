@@ -24,6 +24,7 @@ public class JoinEvent implements Listener{
 	public void onJoin(PlayerJoinEvent e){
 		Player p = e.getPlayer();
 		try {
+			MysqlManager.CheckConnection();
 			Statement s = MysqlManager.getConnection().createStatement();
 			ResultSet set = s.executeQuery("SELECT * FROM " 
 					+ MysqlManager.getInfo(plugin, "Options.table-name") 
